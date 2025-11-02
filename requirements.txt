@@ -31,5 +31,3 @@ typing_extensions==4.15.0
 urllib3==2.5.0
 uvicorn==0.35.0
 wrapt==1.17.3
-qrcode[pil]>=7.4.2
-Pillow>=10.4.0

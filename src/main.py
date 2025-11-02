@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from .endpoints import contributor
 from .database import Base, engine
 
@@ -18,3 +18,12 @@ app.include_router(contributor.router)
 @app.get("/")
 def root():
     return {"message": "MozDest API – see /docs for Swagger"}
+
+# Explicit health/HEAD handlers for platforms that probe with HEAD
+@app.head("/", include_in_schema=False)
+def head_root():
+    return Response(status_code=200)
+
+@app.get("/healthz", include_in_schema=False)
+def healthz():
+    return {"status": "ok"}
