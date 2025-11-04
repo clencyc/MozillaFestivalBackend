@@ -18,7 +18,7 @@ app.include_router(mock.router)
 
 @app.get("/")
 def root():
-    return {"message": "MozDest API – see /docs for Swagger"}
+    return {"message": "MozFest API – see /docs for Swagger"}
 
 # Explicit health/HEAD handlers for platforms that probe with HEAD
 @app.head("/", include_in_schema=False)

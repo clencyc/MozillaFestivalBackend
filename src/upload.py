@@ -25,7 +25,7 @@ else:
         secure=True,
     )
 
-def upload_image(file, folder: str = "mozdest"):
+def upload_image(file, folder: str = "mozfest"):
     """Upload a FastAPI UploadFile → Cloudinary, return secure_url & public_id"""
     try:
         result = cloudinary.uploader.upload(
