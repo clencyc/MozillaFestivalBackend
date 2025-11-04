@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Response
-from .endpoints import contributor
+from .endpoints import contributor, mock
 from .database import Base, engine
 
 app = FastAPI(
-    title="MozDest Backend",
+    title="Mozfest Backend",
     description="FastAPI + Postgres + Cloudinary",
     version="0.1.0",
 )
@@ -14,6 +14,7 @@ def on_startup():
     Base.metadata.create_all(bind=engine)
 
 app.include_router(contributor.router)
+app.include_router(mock.router)
 
 @app.get("/")
 def root():
