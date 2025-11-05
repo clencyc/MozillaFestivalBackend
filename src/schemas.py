@@ -20,6 +20,15 @@ class ContributorOut(BaseModel):
     class Config:
         from_attributes = True
 
+class ContributorBasicOut(BaseModel):
+    name: str
+    country: str
+    series_id: Optional[str]
+    mosaic_url: Optional[HttpUrl]
+
+    class Config:
+        from_attributes = True
+
 # ---------- Stories ----------
 class StoryCreate(BaseModel):
     title: str
