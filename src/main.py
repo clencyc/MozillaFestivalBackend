@@ -6,6 +6,9 @@ app = FastAPI(
     title="Mozfest Backend",
     description="FastAPI + Postgres + Cloudinary",
     version="0.1.0",
+    docs_url="/docs",
+    redoc_url=None,
+    openapi_url="/openapi.json",
 )
 
 # Create tables on startup (use Alembic in prod)
