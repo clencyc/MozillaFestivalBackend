@@ -1,8 +1,7 @@
-from fastapi import FastAPI, Response, Depends, HTTPException, UploadFile, File
+from fastapi import FastAPI, Response, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from uuid import uuid4
 from typing import List
-from src.endpoints import contributor
 from src.database import Base, engine, SessionLocal
 from src import models, schemas, upload
 
@@ -28,9 +27,6 @@ def get_db():
 def on_startup():
     Base.metadata.create_all(bind=engine)
 
-# Include contributor router
-app.include_router(contributor.router)
-
 # Root endpoints
 @app.get("/")
 def root():
@@ -46,7 +42,48 @@ def healthz():
     return {"status": "ok"}
 
 
-# ========== CONTRIBUTORS ==========a
+# ========== CONTRIBUTORS (Full CRUD) ==========
+@app.post("/contributors/", response_model=schemas.ContributorOut, tags=["contributors"])
+def create_contributor(
+    name: str = Form(...),
+    country: str = Form(...),
+    series_id: str = Form(None),
+    mosaic: UploadFile = File(...),
+    screenshot: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    """Create a new contributor with mosaic and screenshot uploads"""
+    # 1. Upload images
+    try:
+        mosaic_url, _ = upload.upload_image(mosaic, folder="mosaics")
+        screenshot_url, _ = upload.upload_image(screenshot, folder="screenshots")
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=str(e))
+
+    # 2. Persist
+    db_contrib = models.Contributor(
+        name=name,
+        country=country,
+        series_id=series_id,
+        mosaic_url=mosaic_url,
+        screenshot_url=screenshot_url,
+    )
+    db.add(db_contrib)
+    db.commit()
+    db.refresh(db_contrib)
+
+    return db_contrib
+
+@app.get("/contributors/{contrib_id}", response_model=schemas.ContributorOut, tags=["contributors"])
+def get_contributor_full(contrib_id: int, db: Session = Depends(get_db)):
+    """Get a contributor with full details including screenshots"""
+    contrib = db.get(models.Contributor, contrib_id)
+    if not contrib:
+        raise HTTPException(404, "Contributor not found")
+    return contrib
+
+
+# ========== CONTRIBUTORS (Mock - Basic Info) ==========
 @app.get("/api/mock/contributors", response_model=List[schemas.ContributorBasicOut], tags=["mock"])
 def list_contributors(db: Session = Depends(get_db)):
     """Get all contributors with basic info: name, country, series_id, and mosaic_url only"""
