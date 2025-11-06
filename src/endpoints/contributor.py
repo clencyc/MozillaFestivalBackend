@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
-from .. import models, schemas, database, upload
+from src import models, schemas, database, upload
 
 router = APIRouter(prefix="/contributors", tags=["contributors"])
 

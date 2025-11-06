@@ -2,9 +2,9 @@ from fastapi import FastAPI, Response, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 from uuid import uuid4
 from typing import List
-from .endpoints import contributor
-from .database import Base, engine, SessionLocal
-from . import models, schemas, upload
+from src.endpoints import contributor
+from src.database import Base, engine, SessionLocal
+from src import models, schemas, upload
 
 app = FastAPI(
     title="Mozfest Backend",
@@ -46,7 +46,7 @@ def healthz():
     return {"status": "ok"}
 
 
-# ========== CONTRIBUTORS ==========
+# ========== CONTRIBUTORS ==========a
 @app.get("/api/mock/contributors", response_model=List[schemas.ContributorBasicOut], tags=["mock"])
 def list_contributors(db: Session = Depends(get_db)):
     """Get all contributors with basic info: name, country, series_id, and mosaic_url only"""
