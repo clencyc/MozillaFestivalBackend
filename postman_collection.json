@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "mozfest-backend-api",
+		"name": "MozFest Backend API",
+		"description": "Complete API collection for MozFest Backend including Contributors, Stories, and Tile Gradients endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "mozfest-api"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://girlswhoml.onrender.com",
+			"type": "string"
+		},
+		{
+			"key": "local_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health & Status",
+			"item": [
+				{
+					"name": "Root - Welcome Message",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Get welcome message from the API root"
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check if the API is running and healthy"
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI Schema",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/openapi.json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"openapi.json"
+							]
+						},
+						"description": "Get the OpenAPI specification"
+					},
+					"response": []
+				}
+			],
+			"description": "Basic health and status endpoints"
+		},
+		{
+			"name": "Contributors (Full CRUD)",
+			"item": [
+				{
+					"name": "Create Contributor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Jane Doe",
+									"type": "text",
+									"description": "Contributor's full name"
+								},
+								{
+									"key": "country",
+									"value": "Kenya",
+									"type": "text",
+									"description": "Contributor's country"
+								},
+								{
+									"key": "series_id",
+									"value": "series-001",
+									"type": "text",
+									"description": "Optional series ID"
+								},
+								{
+									"key": "mosaic",
+									"type": "file",
+									"description": "Mosaic image file (required)",
+									"src": []
+								},
+								{
+									"key": "screenshot",
+									"type": "file",
+									"description": "Screenshot image file (required)",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/contributors/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contributors",
+								""
+							]
+						},
+						"description": "Create a new contributor with mosaic and screenshot uploads"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contributor (Full Details)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/contributors/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"contributors",
+								"1"
+							]
+						},
+						"description": "Get a specific contributor with full details including screenshots"
+					},
+					"response": []
+				}
+			],
+			"description": "Full CRUD operations for contributors with complete data"
+		},
+		{
+			"name": "Mock API - Contributors",
+			"item": [
+				{
+					"name": "List All Contributors (Basic)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mock/contributors",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mock",
+								"contributors"
+							]
+						},
+						"description": "Get all contributors with basic info: name, country, series_id, and mosaic_url only"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Contributor (Basic)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mock/contributors/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mock",
+								"contributors",
+								"1"
+							]
+						},
+						"description": "Get a specific contributor with basic info only"
+					},
+					"response": []
+				}
+			],
+			"description": "Mock endpoints for contributors with limited fields"
+		},
+		{
+			"name": "Mock API - Stories",
+			"item": [
+				{
+					"name": "List All Stories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mock/stories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mock",
+								"stories"
+							]
+						},
+						"description": "Get all stories ordered by creation date (newest first)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Story",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Breaking Barriers in Tech",
+									"type": "text",
+									"description": "Story title"
+								},
+								{
+									"key": "name",
+									"value": "Sarah Johnson",
+									"type": "text",
+									"description": "Person's name"
+								},
+								{
+									"key": "occupation",
+									"value": "Software Engineer",
+									"type": "text",
+									"description": "Person's occupation"
+								},
+								{
+									"key": "story",
+									"value": "My journey into technology started when I was 12 years old. I was fascinated by how computers worked and spent countless hours learning to code...",
+									"type": "text",
+									"description": "The full story text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"description": "Story image file (required)",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/mock/stories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mock",
+								"stories"
+							]
+						},
+						"description": "Create a new story with image upload"
+					},
+					"response": []
+				}
+			],
+			"description": "Story management endpoints"
+		},
+		{
+			"name": "Mock API - Tile Gradients",
+			"item": [
+				{
+					"name": "List All Tile Gradients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/mock/tile_gradients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mock",
+								"tile_gradients"
+							]
+						},
+						"description": "Get all tile gradient configurations"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tile Gradient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"from_color\": \"#FF6B6B\",\n    \"to_color\": \"#4ECDC4\",\n    \"border\": \"#FFFFFF\",\n    \"glow\": \"#FFD93D\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/mock/tile_gradients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mock",
+								"tile_gradients"
+							]
+						},
+						"description": "Create a new tile gradient configuration"
+					},
+					"response": []
+				}
+			],
+			"description": "Tile gradient color scheme endpoints"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// You can add pre-request scripts here",
+					"// For example, to set timestamps or generate UUIDs",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test scripts",
+					"pm.test(\"Status code is successful\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+					"});",
+					"",
+					"pm.test(\"Response time is acceptable\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+					"});"
+				]
+			}
+		}
+	]
+}
