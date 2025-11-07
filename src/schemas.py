@@ -4,14 +4,14 @@ from datetime import datetime
 
 # ---------- Contributor ----------
 class ContributorCreate(BaseModel):
-    model_config = ConfigDict()  # Default; add populate_by_name=True if needed for aliases
+    model_config = ConfigDict()  # Inside the class!
     
     name: str = Field(..., min_length=1)
     country: str = Field(..., min_length=1)
     series_id: Optional[str] = None
 
 class ContributorOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)  # v2 ORM mode replacement
+    model_config = ConfigDict(from_attributes=True)  # Nested inside!
     
     id: int
     name: str
@@ -22,9 +22,9 @@ class ContributorOut(BaseModel):
     created_at: datetime
 
 class ContributorBasicOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)  # Nested inside!
     
-    id: int  # Added: Matches route usage
+    id: int  # Ensure this matches your DB/model
     name: str
     country: str
     series_id: Optional[str]
@@ -52,20 +52,17 @@ class StoryOut(BaseModel):
 
 # ---------- Tile Gradients ----------
 class TileGradientCreate(BaseModel):
-    model_config = ConfigDict(populate_by_name=True)  # v2 replacement for aliases
+    model_config = ConfigDict(populate_by_name=True)
     
-    from_: str = Field(..., alias="from_color")  # Adjust alias to match your DB field
+    from_: str = Field(..., alias="from_color")  # Matches your DB field
     to_: str = Field(..., alias="to_color")
     border: str
     glow: str
 
 class TileGradientOut(BaseModel):
-    model_config = ConfigDict(
-        from_attributes=True,
-        populate_by_name=True
-    )
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
     
-    from_: str = Field(alias="from_color")  # No ... if optional in DB
+    from_: str = Field(alias="from_color")
     to_: str = Field(alias="to_color")
     border: str
     glow: str
