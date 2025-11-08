@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Response, Depends, HTTPException, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from uuid import uuid4
 from typing import List
@@ -12,6 +13,20 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url=None,
     openapi_url="/openapi.json",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",  
+        "http://localhost:5173",  
+        "http://localhost:8080",  
+        "https://girlswhoml.vercel.app", 
+        "https://girlswhoml.onrender.com", 
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 # Database dependency
